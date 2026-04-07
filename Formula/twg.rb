@@ -1,28 +1,31 @@
 class Twg < Formula
+  require "fileutils"
+  require "json"
+
   desc "CLI wrapper for the Atlassian GraphQL Gateway API"
   homepage "https://bitbucket.org/atlassian/twg-cli"
-  version "0.7.3"
+  version "0.7.4"
   license "MIT"
 
   on_macos do
     on_arm do
-      url "https://teamwork-graph.atlassian.com/cli/homebrew/0.7.3/twg-0.7.3-darwin-arm64.tar.gz"
-      sha256 "b032984d8a04f6460d8baa0e7f2f9439b1aaed23e3937e3a699bb4b1dee2b680"
+      url "https://teamwork-graph.atlassian.com/cli/homebrew/0.7.4/twg-0.7.4-darwin-arm64.tar.gz"
+      sha256 "b7180a84428d038074206c7c63ee797e366c1d317646800730154f4b2a3be27e"
     end
     on_intel do
-      url "https://teamwork-graph.atlassian.com/cli/homebrew/0.7.3/twg-0.7.3-darwin-x64.tar.gz"
-      sha256 "a09c00b4ff5406a5a7a00de26d1f30cfeac93e9299c46fb4bc05ffc2ec99dd99"
+      url "https://teamwork-graph.atlassian.com/cli/homebrew/0.7.4/twg-0.7.4-darwin-x64.tar.gz"
+      sha256 "0b5f22d253b80c7574b79913704c66f68fd14394324288fa43f21ce47eb6ca2f"
     end
   end
 
   on_linux do
     on_arm do
-      url "https://teamwork-graph.atlassian.com/cli/homebrew/0.7.3/twg-0.7.3-linux-arm64.tar.gz"
-      sha256 "a966feddb940cd75bea08130cb730f54f6e154e1bdd31d47ceca404885989393"
+      url "https://teamwork-graph.atlassian.com/cli/homebrew/0.7.4/twg-0.7.4-linux-arm64.tar.gz"
+      sha256 "8c6ea6bba6c419d11c9b5d6eecfc75643fef9137f2829bc12baefc186daed03c"
     end
     on_intel do
-      url "https://teamwork-graph.atlassian.com/cli/homebrew/0.7.3/twg-0.7.3-linux-x64.tar.gz"
-      sha256 "ed1293fdc081c0e4cd5ba6af523d24814fdda299ec34e8e91d6d83f151b353d8"
+      url "https://teamwork-graph.atlassian.com/cli/homebrew/0.7.4/twg-0.7.4-linux-x64.tar.gz"
+      sha256 "144a999c69d56b5edfec175bb8da2004d9a3565c45f749fa9a8533840ba750f3"
     end
   end
 
@@ -30,11 +33,31 @@ class Twg < Formula
     bin.install "twg"
   end
 
+  def post_install
+    config_dir = File.join(Dir.home, ".twg")
+    FileUtils.mkdir_p(config_dir)
+    File.write(
+      File.join(config_dir, "install.json"),
+      JSON.pretty_generate(
+        {
+          installMethod: "brew",
+          installChannel: "stable",
+          installDir: bin.to_s,
+          binaryPath: (opt_bin/"twg").to_s,
+          installedVersion: version.to_s
+        }
+      ) + "\n"
+    )
+  end
+
   def caveats
     <<~EOS
       Next steps:
         twg skills install --global --yes
         twg login
+
+      Updates:
+        brew upgrade twg
     EOS
   end
 
