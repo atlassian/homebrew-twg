@@ -4,28 +4,28 @@ class Twg < Formula
 
   desc "CLI wrapper for the Atlassian GraphQL Gateway API"
   homepage "https://bitbucket.org/atlassian/twg-cli"
-  version "0.7.4"
+  version "0.7.5"
   license "MIT"
 
   on_macos do
     on_arm do
-      url "https://teamwork-graph.atlassian.com/cli/homebrew/0.7.4/twg-0.7.4-darwin-arm64.tar.gz"
-      sha256 "b7180a84428d038074206c7c63ee797e366c1d317646800730154f4b2a3be27e"
+      url "https://teamwork-graph.atlassian.com/cli/homebrew/0.7.5/twg-0.7.5-darwin-arm64.tar.gz"
+      sha256 "667354806f9752638ef84e99eef62033f0361394a3c9cdb2cb5b1fd1e1d0c26b"
     end
     on_intel do
-      url "https://teamwork-graph.atlassian.com/cli/homebrew/0.7.4/twg-0.7.4-darwin-x64.tar.gz"
-      sha256 "0b5f22d253b80c7574b79913704c66f68fd14394324288fa43f21ce47eb6ca2f"
+      url "https://teamwork-graph.atlassian.com/cli/homebrew/0.7.5/twg-0.7.5-darwin-x64.tar.gz"
+      sha256 "5b714b676cc1ede4d830bfce9aaf3292f3d790f31e7255c070175bd7db4b30ec"
     end
   end
 
   on_linux do
     on_arm do
-      url "https://teamwork-graph.atlassian.com/cli/homebrew/0.7.4/twg-0.7.4-linux-arm64.tar.gz"
-      sha256 "8c6ea6bba6c419d11c9b5d6eecfc75643fef9137f2829bc12baefc186daed03c"
+      url "https://teamwork-graph.atlassian.com/cli/homebrew/0.7.5/twg-0.7.5-linux-arm64.tar.gz"
+      sha256 "a5cb4aef31115df46c307305e1c396943731cb90b6ea8c69b1c0d787105f2c0d"
     end
     on_intel do
-      url "https://teamwork-graph.atlassian.com/cli/homebrew/0.7.4/twg-0.7.4-linux-x64.tar.gz"
-      sha256 "144a999c69d56b5edfec175bb8da2004d9a3565c45f749fa9a8533840ba750f3"
+      url "https://teamwork-graph.atlassian.com/cli/homebrew/0.7.5/twg-0.7.5-linux-x64.tar.gz"
+      sha256 "2b9e0ce23ed714b26f537d0f7fb82554ad020e7396b995c60f2734e5bebb6c92"
     end
   end
 
