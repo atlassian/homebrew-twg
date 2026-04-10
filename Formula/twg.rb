@@ -10,22 +10,22 @@ class Twg < Formula
   on_macos do
     on_arm do
       url "https://teamwork-graph.atlassian.com/cli/homebrew/0.7.7/twg-0.7.7-darwin-arm64.tar.gz"
-      sha256 "cebc7396d1485e17559d63cf67d43267b1050d20d15ee24b95d2d5db78682b01"
+      sha256 "e911670c590326733bda8dde7f6ed61f449ad74784304ea33e4356409b2179ff"
     end
     on_intel do
       url "https://teamwork-graph.atlassian.com/cli/homebrew/0.7.7/twg-0.7.7-darwin-x64.tar.gz"
-      sha256 "ff9ac55c42ad60a7efa5e62b9dea121bf64be2742c154270f732c376e523ef9e"
+      sha256 "9e8d969c90bcfafb460460f018ba344f435f42de0cb58dee1077ea29e82ba9df"
     end
   end
 
   on_linux do
     on_arm do
       url "https://teamwork-graph.atlassian.com/cli/homebrew/0.7.7/twg-0.7.7-linux-arm64.tar.gz"
-      sha256 "88dd2cf1db45af10151d317253ef52a03f0200b180dc7a91810421457e4e6fdf"
+      sha256 "a4625302ac30a333d33c9b90008eecdf2b7d536fe81c5dc380e05de10793912e"
     end
     on_intel do
       url "https://teamwork-graph.atlassian.com/cli/homebrew/0.7.7/twg-0.7.7-linux-x64.tar.gz"
-      sha256 "e5e558791ca9c7d073b0afd4d95bf857190a36dc0b67fec6b0b398f8f597e05e"
+      sha256 "5cabc8bfe9ab68f10d6061290cc67ebe1381f04824ca301abb57c0bad38e4341"
     end
   end
 
