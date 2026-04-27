@@ -27,7 +27,20 @@ class Twg < Formula
   end
 
   def install
-    bin.install "twg"
+    runtime = File.exist?("twg-bin") ? "twg-bin" : "twg"
+    libexec.install runtime => "twg-bin"
+    (bin/"twg").write <<~EOS
+      #!/usr/bin/env bash
+      set -euo pipefail
+      unset BUN_BE_BUN
+      unset BUN_OPTIONS
+      unset BUN_INSPECT
+      unset BUN_INSPECT_CONNECT_TO
+      unset BUN_INSPECT_NOTIFY
+      unset BUN_INSPECT_PRELOAD
+      exec "#{libexec}/twg-bin" "$@"
+    EOS
+    chmod 0755, bin/"twg"
   end
 
   def caveats
