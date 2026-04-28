@@ -1,43 +1,39 @@
 class Twg < Formula
   desc "CLI wrapper for the Atlassian GraphQL Gateway API"
   homepage "https://bitbucket.org/atlassian/twg-cli"
-  version "0.8.9"
+  version "0.9.0"
   license "MIT"
 
   on_macos do
     on_arm do
-      url "https://teamwork-graph.atlassian.com/cli/homebrew/0.8.9/twg-0.8.9-darwin-arm64.tar.gz"
-      sha256 "4e9a29f3cad4535a8e18092604a536fe42e3cde7ce0a2994fa3986b9442c2321"
+      url "https://teamwork-graph.atlassian.com/cli/homebrew/0.9.0/twg-0.9.0-darwin-arm64.tar.gz"
+      sha256 "8bd1e285d09d236cbe4d04e0caf51f2111e0bee56f750ff5ed20fcf36bc3aef9"
     end
     on_intel do
-      url "https://teamwork-graph.atlassian.com/cli/homebrew/0.8.9/twg-0.8.9-darwin-x64.tar.gz"
-      sha256 "a1674b76f6acceab3c90c38efa92627c1638b69cfe1268cd6370ba15080ea9d2"
+      url "https://teamwork-graph.atlassian.com/cli/homebrew/0.9.0/twg-0.9.0-darwin-x64.tar.gz"
+      sha256 "0033297cfb7122e036508fb4cc30bd6739e4ced52da56e7e71cdc0aa7857236b"
     end
   end
 
   on_linux do
     on_arm do
-      url "https://teamwork-graph.atlassian.com/cli/homebrew/0.8.9/twg-0.8.9-linux-arm64.tar.gz"
-      sha256 "c401a0cf005f738ef96e222804524a686dd26b87d224d0b8a56935ddebcf6789"
+      url "https://teamwork-graph.atlassian.com/cli/homebrew/0.9.0/twg-0.9.0-linux-arm64.tar.gz"
+      sha256 "10a3ee30033973675079768b6681dbf8cb78f4d59242eed5aec321769f5b0e2a"
     end
     on_intel do
-      url "https://teamwork-graph.atlassian.com/cli/homebrew/0.8.9/twg-0.8.9-linux-x64.tar.gz"
-      sha256 "fcffabd9dae03aca8e0999bffe99bb13796cf01b2485bfc8d48a84c8f9d0c021"
+      url "https://teamwork-graph.atlassian.com/cli/homebrew/0.9.0/twg-0.9.0-linux-x64.tar.gz"
+      sha256 "019e2ac9d2a13a98224290f3ea634da9ce49e0c66e1394ea631435241932aa04"
     end
   end
 
   def install
-    runtime = File.exist?("twg-bin") ? "twg-bin" : "twg"
-    libexec.install runtime => "twg-bin"
+    libexec.install "twg-bin"
     (bin/"twg").write <<~EOS
       #!/usr/bin/env bash
       set -euo pipefail
-      unset BUN_BE_BUN
-      unset BUN_OPTIONS
-      unset BUN_INSPECT
-      unset BUN_INSPECT_CONNECT_TO
-      unset BUN_INSPECT_NOTIFY
-      unset BUN_INSPECT_PRELOAD
+      for name in "${!BUN_@}"; do
+        unset "$name"
+      done
       exec "#{libexec}/twg-bin" "$@"
     EOS
     chmod 0755, bin/"twg"
