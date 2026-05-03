@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CLI reference | TWG CLI</title>
+  <meta name="description" content="Overview of TWG CLI surfaces, resources, and example commands.">
+  <style>
+    :root { color-scheme: light; --ink: #172b4d; --muted: #44546f; --line: #dcdfe4; --panel: #f7f8f9; --accent: #0c66e4; --warning: #fff7d6; --note: #e9f2ff; --tip: #dcfff1; }
+    * { box-sizing: border-box; }
+    body { margin: 0; color: var(--ink); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; line-height: 1.55; background: #fff; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 16px 24px; border-bottom: 1px solid var(--line); }
+    .brand { color: var(--ink); font-weight: 700; }
+    .topbar-links { display: flex; gap: 16px; font-size: 14px; }
+    .layout { display: grid; grid-template-columns: minmax(220px, 280px) minmax(0, 1fr); min-height: calc(100vh - 58px); }
+    .sidebar { border-right: 1px solid var(--line); padding: 24px; background: var(--panel); }
+    .site-nav ul { list-style: none; margin: 0; padding: 0; }
+    .site-nav li + li { margin-top: 10px; }
+    .site-nav a { color: var(--muted); font-size: 14px; }
+    .site-nav a[aria-current="page"] { color: var(--ink); font-weight: 700; }
+    main { max-width: 920px; padding: 32px 40px 56px; }
+    h1, h2, h3 { line-height: 1.25; margin: 1.6em 0 0.6em; }
+    h1 { margin-top: 0; font-size: 34px; }
+    h2 { font-size: 24px; border-top: 1px solid var(--line); padding-top: 24px; }
+    h3 { font-size: 18px; }
+    table { width: 100%; border-collapse: collapse; display: block; overflow-x: auto; }
+    th, td { border: 1px solid var(--line); padding: 8px 10px; text-align: left; vertical-align: top; }
+    th { background: var(--panel); }
+    code { background: #f1f2f4; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, "SFMono-Regular", Consolas, monospace; font-size: 0.92em; }
+    pre { overflow-x: auto; background: #0b1020; color: #f7f8f9; border-radius: 6px; padding: 14px 16px; }
+    pre code { background: transparent; color: inherit; padding: 0; }
+    .dac-panel, .setup-spotlight { border: 1px solid var(--line); border-left-width: 4px; border-radius: 6px; margin: 18px 0; padding: 14px 16px; }
+    .dac-panel-warning { background: var(--warning); border-left-color: #f5c84b; }
+    .dac-panel-note { background: var(--note); border-left-color: #579dff; }
+    .dac-panel-tip { background: var(--tip); border-left-color: #36b37e; }
+    .dac-panel-label { font-weight: 700; margin-bottom: 4px; }
+    .setup-spotlight { background: #f7f8ff; border-left-color: var(--accent); }
+    .setup-spotlight h2 { border: 0; margin-top: 0; padding-top: 0; }
+    .source-footer { border-top: 1px solid var(--line); color: var(--muted); font-size: 12px; margin-top: 48px; padding-top: 16px; }
+    @media (max-width: 760px) {
+      .topbar { align-items: flex-start; flex-direction: column; }
+      .layout { display: block; }
+      .sidebar { border-right: 0; border-bottom: 1px solid var(--line); }
+      main { padding: 24px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/homebrew-twg/">TWG CLI</a>
+    <div class="topbar-links">
+      <a href="/homebrew-twg/getting-started/installation/">Install</a>
+      <a href="https://developer.atlassian.com/cloud/twg-cli/">DAC source</a>
+      <a href="https://github.com/atlassian/homebrew-twg">Homebrew tap</a>
+    </div>
+  </header>
+  <div class="layout">
+    <aside class="sidebar">
+      <nav class="site-nav" aria-label="TWG CLI docs">
+<ul>
+<li><a href="/homebrew-twg/">Overview</a></li>
+<li><a href="/homebrew-twg/getting-started/installation/">Installation</a></li>
+<li><a href="/homebrew-twg/getting-started/authentication/">Authentication</a></li>
+<li><a href="/homebrew-twg/getting-started/quick-start/">Quick Start</a></li>
+<li><a href="/homebrew-twg/agents/skills/">Agent Skills</a></li>
+<li><a href="/homebrew-twg/agents/examples/">Agent Examples</a></li>
+<li><a href="/homebrew-twg/commands/cli-reference/" aria-current="page">CLI Reference</a></li>
+<li><a href="/homebrew-twg/commands/global-options/">Global Options</a></li>
+<li><a href="/homebrew-twg/commands/output-format/">Output Format</a></li>
+</ul>
+</nav>
+    </aside>
+    <main>
+      <h1 id="cli-reference">CLI reference</h1>
+<p>This page is a reference for the commands TWG CLI agents run on your behalf. You don't need to memorize any of this — just describe what you want in plain language and your agent picks the right commands. The examples here are useful if you want to understand what's happening under the hood, write scripts, or verify agent output.</p>
+<p>TWG CLI uses the grammar: <code>twg &lt;surface&gt; &lt;resource&gt; &lt;verb&gt; [options]</code></p>
+<h2 id="jira">Jira</h2>
+<pre><code class="language-bash">twg jira workitem get PROJ-123
+twg jira workitem query --jql &quot;assignee = currentUser() AND statusCategory != Done&quot;
+twg jira workitem create --space PROJ --type Task --summary &quot;New task&quot;
+twg jira workitem update --id PROJ-123 --summary &quot;Updated&quot; --status &quot;In Progress&quot;
+twg jira workitem transition --id PROJ-123 --transition-id 31
+twg jira workitem comment create --workitem-id PROJ-123 --body &quot;Comment&quot;
+twg jira workitem link create --issue-key PROJ-1 --issue-key-linked PROJ-2 --link-type blocks
+twg jira board query / get
+twg jira sprint query / start
+twg jira dashboard query / get
+twg jira space query / get
+</code></pre>
+<h2 id="confluence">Confluence</h2>
+<pre><code class="language-bash">twg confluence page get &lt;id&gt;
+twg confluence page create --space-id ENG --title &quot;Title&quot; --body &quot;Content&quot;
+twg confluence page update &lt;id&gt; --title &quot;New title&quot; -y
+twg confluence page move &lt;id&gt; --parent-id &lt;parent&gt;
+twg confluence blog query / get / create
+twg confluence space query / get
+twg confluence search query --cql &quot;text ~ 'onboarding'&quot;
+twg confluence database query / get
+twg confluence whiteboard query / get
+</code></pre>
+<h2 id="bitbucket">Bitbucket</h2>
+<p><code>--workspace</code> and <code>--repo</code> are auto-detected from the git remote when you run from inside a repository. Supply them explicitly otherwise. <code>twg bb</code> is a shorthand alias for <code>twg bitbucket</code>.</p>
+<pre><code class="language-bash">twg bitbucket repo query                                          # Repos in detected workspace
+twg bitbucket repo get my-repo --workspace example              # Explicit workspace
+twg bb prs query --scope me                                       # Your open PRs (current repo)
+twg bb prs query --scope me -w atlassian                         # Your PRs across a workspace
+twg bb prs get 42 --workspace example --repo my-repo
+twg bb prs create --title &quot;My change&quot; --source feature/branch
+twg bb prs merge 42 / decline 42 / approve 42 / unapprove 42
+twg bb prs comment create 42 --text &quot;Looks good&quot;
+twg bb prs comment update 42 &lt;comment-id&gt; --text &quot;Updated&quot;
+twg bb prs comment delete 42 &lt;comment-id&gt;
+twg bb prs task create 42 --text &quot;Follow up on tests&quot;
+twg bb prs task resolve 42 &lt;task-id&gt; / reopen 42 &lt;task-id&gt;
+twg bitbucket branch query / create
+twg bitbucket commit query / get
+twg bitbucket pipeline query / get
+twg bitbucket deployment query / get
+twg bitbucket workspace get / member query
+</code></pre>
+<h2 id="goals">Goals</h2>
+<pre><code class="language-bash">twg goals                               # Active and pending goals on site
+twg goals --scope me                    # Your goals
+twg goals get &lt;key&gt;
+twg goals --tql 'name ~ &quot;Q2 revenue&quot;'   # Full-text search via TQL
+twg goals create / update / archive
+twg goals status-update create / update
+</code></pre>
+<h2 id="projects">Projects</h2>
+<pre><code class="language-bash">twg projects                            # Active projects on site
+twg projects --scope me                 # Your projects
+twg projects get &lt;key&gt;
+twg projects --tql 'name ~ &quot;migration&quot;' # Full-text search via TQL
+twg projects create / update / archive
+twg projects status-update create
+</code></pre>
+<h2 id="focus-areas">Focus areas</h2>
+<pre><code class="language-bash">twg focus-areas query --scope me
+twg focus-areas get &lt;ari&gt;
+twg focus-areas search &quot;growth&quot;
+twg focus-areas-tree &lt;ari&gt;              # Hierarchy tree by ARI
+twg focus-areas-tree --name &quot;...&quot;       # Hierarchy tree by name
+</code></pre>
+<h2 id="cross-product">Cross-product</h2>
+<pre><code class="language-bash">twg work query --scope me --since 7d    # Cross-product work summary
+twg docs query --since 7d              # Documents across all providers
+twg videos query                        # Videos
+twg meetings query --since 14d          # Calendar events and recordings
+twg recently-viewed                     # Recently viewed items
+twg pull-requests &lt;ari&gt;                 # PR detail from any SCM
+twg commits &lt;ari&gt;                       # Commit detail
+twg deployments &lt;ari&gt;                   # Deployment detail
+</code></pre>
+<h2 id="identity-and-collaboration">Identity and collaboration</h2>
+<pre><code class="language-bash">twg user &lt;account-id&gt;                   # User profile
+twg user search --email j@example.com   # Find user by email
+twg collaborators                       # Top collaborators (current user)
+twg org-tree --up-only                  # Reporting chain (current user)
+twg resolve --query &quot;Jane Doe&quot;          # Resolve name or URL to ARI
+twg rovo search &quot;...&quot;                   # Rovo AI search
+</code></pre>
+<h2 id="control-plane">Control plane</h2>
+<pre><code class="language-bash">twg login                               # Authenticate interactively
+twg login --force                       # Re-enter all credentials
+twg skills install                      # Install agent skills (interactive)
+twg doctor                              # Check auth, connectivity, and build info
+</code></pre>
+<h2 id="query-languages">Query languages</h2>
+<pre><code class="language-bash"># JQL — Jira Query Language
+twg jira workitem query --jql &quot;project = PROJ AND status = 'In Progress'&quot;
+
+# CQL — Confluence Query Language
+twg confluence search query --cql &quot;space = ENG AND type = page&quot;
+
+# TQL — Atlas Goals and Projects (use -q / --tql)
+twg goals --tql &quot;owner = currentUser() AND status = 'AT_RISK'&quot;
+
+# AQL — Assets Query Language
+twg assets query --aql &quot;objectType = Server AND Status = Active&quot;
+</code></pre>
+<h2 id="next-steps">Next steps</h2>
+<ul>
+<li><a href="/homebrew-twg/commands/global-options/">Global options</a></li>
+<li><a href="/homebrew-twg/commands/output-format/">Output format</a></li>
+</ul>
+
+      <footer class="source-footer">
+        Generated from atlassian/twg-cli e168be353c2b (2026-05-03T19:22:31+00:00).
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

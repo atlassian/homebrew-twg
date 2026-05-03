@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Agent examples | TWG CLI</title>
+  <meta name="description" content="Example natural language prompts and the TWG CLI commands agents run in response.">
+  <style>
+    :root { color-scheme: light; --ink: #172b4d; --muted: #44546f; --line: #dcdfe4; --panel: #f7f8f9; --accent: #0c66e4; --warning: #fff7d6; --note: #e9f2ff; --tip: #dcfff1; }
+    * { box-sizing: border-box; }
+    body { margin: 0; color: var(--ink); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; line-height: 1.55; background: #fff; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 16px 24px; border-bottom: 1px solid var(--line); }
+    .brand { color: var(--ink); font-weight: 700; }
+    .topbar-links { display: flex; gap: 16px; font-size: 14px; }
+    .layout { display: grid; grid-template-columns: minmax(220px, 280px) minmax(0, 1fr); min-height: calc(100vh - 58px); }
+    .sidebar { border-right: 1px solid var(--line); padding: 24px; background: var(--panel); }
+    .site-nav ul { list-style: none; margin: 0; padding: 0; }
+    .site-nav li + li { margin-top: 10px; }
+    .site-nav a { color: var(--muted); font-size: 14px; }
+    .site-nav a[aria-current="page"] { color: var(--ink); font-weight: 700; }
+    main { max-width: 920px; padding: 32px 40px 56px; }
+    h1, h2, h3 { line-height: 1.25; margin: 1.6em 0 0.6em; }
+    h1 { margin-top: 0; font-size: 34px; }
+    h2 { font-size: 24px; border-top: 1px solid var(--line); padding-top: 24px; }
+    h3 { font-size: 18px; }
+    table { width: 100%; border-collapse: collapse; display: block; overflow-x: auto; }
+    th, td { border: 1px solid var(--line); padding: 8px 10px; text-align: left; vertical-align: top; }
+    th { background: var(--panel); }
+    code { background: #f1f2f4; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, "SFMono-Regular", Consolas, monospace; font-size: 0.92em; }
+    pre { overflow-x: auto; background: #0b1020; color: #f7f8f9; border-radius: 6px; padding: 14px 16px; }
+    pre code { background: transparent; color: inherit; padding: 0; }
+    .dac-panel, .setup-spotlight { border: 1px solid var(--line); border-left-width: 4px; border-radius: 6px; margin: 18px 0; padding: 14px 16px; }
+    .dac-panel-warning { background: var(--warning); border-left-color: #f5c84b; }
+    .dac-panel-note { background: var(--note); border-left-color: #579dff; }
+    .dac-panel-tip { background: var(--tip); border-left-color: #36b37e; }
+    .dac-panel-label { font-weight: 700; margin-bottom: 4px; }
+    .setup-spotlight { background: #f7f8ff; border-left-color: var(--accent); }
+    .setup-spotlight h2 { border: 0; margin-top: 0; padding-top: 0; }
+    .source-footer { border-top: 1px solid var(--line); color: var(--muted); font-size: 12px; margin-top: 48px; padding-top: 16px; }
+    @media (max-width: 760px) {
+      .topbar { align-items: flex-start; flex-direction: column; }
+      .layout { display: block; }
+      .sidebar { border-right: 0; border-bottom: 1px solid var(--line); }
+      main { padding: 24px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/homebrew-twg/">TWG CLI</a>
+    <div class="topbar-links">
+      <a href="/homebrew-twg/getting-started/installation/">Install</a>
+      <a href="https://developer.atlassian.com/cloud/twg-cli/">DAC source</a>
+      <a href="https://github.com/atlassian/homebrew-twg">Homebrew tap</a>
+    </div>
+  </header>
+  <div class="layout">
+    <aside class="sidebar">
+      <nav class="site-nav" aria-label="TWG CLI docs">
+<ul>
+<li><a href="/homebrew-twg/">Overview</a></li>
+<li><a href="/homebrew-twg/getting-started/installation/">Installation</a></li>
+<li><a href="/homebrew-twg/getting-started/authentication/">Authentication</a></li>
+<li><a href="/homebrew-twg/getting-started/quick-start/">Quick Start</a></li>
+<li><a href="/homebrew-twg/agents/skills/">Agent Skills</a></li>
+<li><a href="/homebrew-twg/agents/examples/" aria-current="page">Agent Examples</a></li>
+<li><a href="/homebrew-twg/commands/cli-reference/">CLI Reference</a></li>
+<li><a href="/homebrew-twg/commands/global-options/">Global Options</a></li>
+<li><a href="/homebrew-twg/commands/output-format/">Output Format</a></li>
+</ul>
+</nav>
+    </aside>
+    <main>
+      <h1 id="agent-examples">Agent examples</h1>
+<p>After <a href="/homebrew-twg/agents/skills/">installing skills</a>, describe what you want in plain language. Your agent discovers the right commands and synthesises the results. Here are common prompts to try:</p>
+<h2 id="simple-prompts">Simple prompts</h2>
+<table>
+<thead>
+<tr>
+<th>Prompt</th>
+<th>What the agent runs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><em>&quot;Summarize the work I did in the last 2 weeks&quot;</em></td>
+<td><code>twg work query --scope me --since 14d</code></td>
+</tr>
+<tr>
+<td><em>&quot;What are my open Jira issues?&quot;</em></td>
+<td><code>twg jira workitem query --jql &quot;assignee = currentUser() AND statusCategory != Done&quot;</code></td>
+</tr>
+<tr>
+<td><em>&quot;Show latest updates on project ATLAS&quot;</em></td>
+<td><code>twg projects get ATLAS</code></td>
+</tr>
+<tr>
+<td><em>&quot;Who do I collaborate with most?&quot;</em></td>
+<td><code>twg collaborators --scope me</code></td>
+</tr>
+<tr>
+<td><em>&quot;Find Confluence pages about onboarding&quot;</em></td>
+<td><code>twg confluence search query --cql &quot;text ~ 'onboarding'&quot;</code></td>
+</tr>
+<tr>
+<td><em>&quot;Create a Jira issue for the login bug&quot;</em></td>
+<td><code>twg jira workitem create --space PROJ --type Bug --summary &quot;Login bug&quot;</code></td>
+</tr>
+<tr>
+<td><em>&quot;What's my org structure?&quot;</em></td>
+<td><code>twg org-tree --scope me --up-only</code></td>
+</tr>
+<tr>
+<td><em>&quot;Show PRs I authored this week&quot;</em></td>
+<td><code>twg bitbucket pull-requests query --scope me --since 7d</code></td>
+</tr>
+<tr>
+<td><em>&quot;What goals is my team tracking?&quot;</em></td>
+<td><code>twg goals --scope team</code></td>
+</tr>
+<tr>
+<td><em>&quot;Get full context around PROJ-456&quot;</em></td>
+<td><code>twg context jira workitem PROJ-456</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="workflow-prompts">Workflow prompts</h2>
+<p>These prompts combine multiple commands into a single response.</p>
+<p><strong>Generate a weekly status report:</strong></p>
+<blockquote>
+<p><em>&quot;Generate a weekly status report for my goals and projects. Include Jira progress, merged PRs, and Confluence updates from this week.&quot;</em></p>
+</blockquote>
+<p><strong>Onboard to a new team:</strong></p>
+<blockquote>
+<p><em>&quot;I just joined Platform Engineering. Orientate me — team members, org chart, goals, projects, focus areas, recent Confluence docs, and the current sprint.&quot;</em></p>
+</blockquote>
+<p><strong>Explore a Jira issue in depth:</strong></p>
+<blockquote>
+<p><em>&quot;Explore the full context of PROJ-1234. Show linked PRs, Confluence docs, parent and child issues, and dependencies.&quot;</em></p>
+</blockquote>
+<p><strong>Look someone up:</strong></p>
+<blockquote>
+<p><em>&quot;Who is jane.doe@example.com? Show their role, reporting chain, teams, and recent work.&quot;</em></p>
+</blockquote>
+<p><strong>Check strategic health:</strong></p>
+<blockquote>
+<p><em>&quot;Generate a health report for the 'Platform' focus area. Show active goals with status and flag anything off track.&quot;</em></p>
+</blockquote>
+<h2 id="next-steps">Next steps</h2>
+<ul>
+<li><a href="/homebrew-twg/agents/skills/">Install skills</a></li>
+<li><a href="/homebrew-twg/commands/output-format/">Output format</a></li>
+</ul>
+
+      <footer class="source-footer">
+        Generated from atlassian/twg-cli e168be353c2b (2026-05-03T19:22:31+00:00).
+      </footer>
+    </main>
+  </div>
+</body>
+</html>
