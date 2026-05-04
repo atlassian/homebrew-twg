@@ -76,35 +76,39 @@
       <h1 id="agent-skills">Agent skills</h1>
 <p>TWG CLI ships installable <strong>skills</strong> — context files that teach your coding agent how to work with Atlassian products. Install them once, then just describe what you want in plain language.</p>
 <h2 id="install-skills">Install skills</h2>
-<p>After <a href="/homebrew-twg/getting-started/installation/">installing</a> and <a href="/homebrew-twg/getting-started/authentication/">authenticating</a>, run:</p>
-<pre><code class="language-bash">twg skills install
+<p>The TWG installer installs skills automatically. It always writes the canonical skill bundle to <code>~/.agents/skills</code>, which is used by Codex, Cursor, Gemini CLI, GitHub Copilot, Rovo Dev, and other agents that support the universal <code>.agents/skills</code> layout.</p>
+<p>If it detects an agent that needs its own skill directory, it also copies the bundle there. For example, Claude Code receives a copy under <code>~/.claude/skills</code> when Claude Code is already installed.</p>
+<p>To repair or refresh skills manually, run:</p>
+<pre><code class="language-bash">twg skills install --global
 </code></pre>
-<p>The installer shows an interactive picker. Choose your agent and it handles the rest.</p>
+<p>Manual installs can also target a specific additional agent:</p>
+<pre><code class="language-bash">twg skills install --global --agent claude
+</code></pre>
 <h2 id="claude">Claude</h2>
-<p><strong>Claude Code</strong> stores skills in <code>.claude/skills/</code>. Select it in the installer and the TWG skill is placed there automatically. After that, open Claude Code in your project and start asking:</p>
+<p><strong>Claude Code</strong> stores skills in <code>.claude/skills/</code>. If Claude Code is detected during TWG install, the TWG skill is placed there automatically. After that, open Claude Code in your project and start asking:</p>
 <blockquote>
 <p><em>&quot;What are my open Jira issues?&quot;</em>
 <em>&quot;Summarize the work my team did this week.&quot;</em>
 <em>&quot;Create a Confluence page summarizing our Q2 goals.&quot;</em></p>
 </blockquote>
 <h2 id="codex">Codex</h2>
-<p><strong>OpenAI Codex</strong> reads skills from the universal <code>.agents/skills/</code> directory, which is always included in the install. No extra step needed — select Codex in the picker and you're done. Then ask Codex:</p>
+<p><strong>OpenAI Codex</strong> reads skills from the universal <code>.agents/skills/</code> directory, which is always included in the install. No extra step is needed. Then ask Codex:</p>
 <blockquote>
 <p><em>&quot;Show me the current sprint and any blockers.&quot;</em>
 <em>&quot;Find PRs I authored this month.&quot;</em>
 <em>&quot;What goals are at risk for my team?&quot;</em></p>
 </blockquote>
 <h2 id="gemini">Gemini</h2>
-<p><strong>Gemini CLI</strong> also reads from <code>.agents/skills/</code> automatically. Select it in the picker. Then:</p>
+<p><strong>Gemini CLI</strong> also reads from <code>.agents/skills/</code> automatically. Then:</p>
 <blockquote>
 <p><em>&quot;Who do I collaborate with most?&quot;</em>
 <em>&quot;Get full context on PROJ-123 — linked PRs, docs, and dependencies.&quot;</em>
 <em>&quot;Show my reporting chain.&quot;</em></p>
 </blockquote>
 <h2 id="other-agents">Other agents</h2>
-<p>The installer also supports <strong>Cursor</strong>, <strong>GitHub Copilot</strong>, <strong>Rovo Dev</strong>, <strong>Augment</strong>, <strong>Kiro CLI</strong>, <strong>OpenCode</strong>, and any agent that supports a skills or context directory. The universal <code>.agents/skills/</code> location works out of the box for most agents.</p>
+<p>The installer also supports <strong>Cursor</strong>, <strong>GitHub Copilot</strong>, <strong>Rovo Dev</strong>, <strong>Augment</strong>, <strong>Kiro CLI</strong>, <strong>OpenCode</strong>, and any agent that supports a skills or context directory. The universal <code>.agents/skills/</code> location works out of the box for most agents. Additional-agent copies are installed only when that agent is detected locally or when you request it with <code>--agent</code>.</p>
 <h2 id="what-gets-installed">What gets installed</h2>
-<p>Skills are placed under <code>.agents/skills/</code> (and any agent-specific locations you select)
+<p>Skills are placed under <code>.agents/skills/</code> (and detected or requested agent-specific locations)
 as two sibling skill directories:</p>
 <table>
 <thead>
@@ -151,7 +155,7 @@ needed.</p>
 </ul>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli e168be353c2b (2026-05-03T19:22:31+00:00).
+        Generated from atlassian/twg-cli 18166defc736 (2026-05-04T02:19:44+00:00).
       </footer>
     </main>
   </div>

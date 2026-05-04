@@ -162,9 +162,10 @@ twg resolve --query &quot;Jane Doe&quot;          # Resolve name or URL to ARI
 twg rovo search &quot;...&quot;                   # Rovo AI search
 </code></pre>
 <h2 id="control-plane">Control plane</h2>
-<pre><code class="language-bash">twg login                               # Authenticate interactively
+<pre><code class="language-bash">twg setup                               # Finish setup: skills, login, health check
+twg login                               # Authenticate interactively
 twg login --force                       # Re-enter all credentials
-twg skills install                      # Install agent skills (interactive)
+twg skills install --global             # Repair or refresh installed agent skills
 twg doctor                              # Check auth, connectivity, and build info
 </code></pre>
 <h2 id="query-languages">Query languages</h2>
@@ -187,7 +188,7 @@ twg assets query --aql &quot;objectType = Server AND Status = Active&quot;
 </ul>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli e168be353c2b (2026-05-03T19:22:31+00:00).
+        Generated from atlassian/twg-cli 18166defc736 (2026-05-04T02:19:44+00:00).
       </footer>
     </main>
   </div>
