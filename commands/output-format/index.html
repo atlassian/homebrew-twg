@@ -38,6 +38,9 @@
     .dac-panel-label { font-weight: 700; margin-bottom: 4px; }
     .setup-spotlight { background: #f7f8ff; border-left-color: var(--accent); }
     .setup-spotlight h2 { border: 0; margin-top: 0; padding-top: 0; }
+    .prompt-copy-card pre { margin: 8px 0 12px; white-space: pre-wrap; }
+    .prompt-copy-card button { background: var(--accent); border: 0; border-radius: 4px; color: #fff; cursor: pointer; font: inherit; font-size: 13px; font-weight: 700; padding: 5px 9px; }
+    .prompt-copy-card button:hover { background: #0055cc; }
     .source-footer { border-top: 1px solid var(--line); color: var(--muted); font-size: 12px; margin-top: 48px; padding-top: 16px; }
     @media (max-width: 760px) {
       .topbar { align-items: flex-start; flex-direction: column; }
@@ -137,9 +140,21 @@ twg work query --scope me --since 30d --output-file /tmp/work.json
 </ul>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli 18166defc736 (2026-05-04T02:19:44+00:00).
+        Generated from atlassian/twg-cli 972e929db2ad (2026-05-04T05:55:17+00:00).
       </footer>
     </main>
   </div>
+  <script>
+    for (const button of document.querySelectorAll("[data-copy-text]")) {
+      button.addEventListener("click", async () => {
+        await navigator.clipboard.writeText(button.getAttribute("data-copy-text") || "");
+        const previous = button.textContent;
+        button.textContent = "Copied";
+        setTimeout(() => {
+          button.textContent = previous;
+        }, 2000);
+      });
+    }
+  </script>
 </body>
 </html>

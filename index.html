@@ -38,6 +38,9 @@
     .dac-panel-label { font-weight: 700; margin-bottom: 4px; }
     .setup-spotlight { background: #f7f8ff; border-left-color: var(--accent); }
     .setup-spotlight h2 { border: 0; margin-top: 0; padding-top: 0; }
+    .prompt-copy-card pre { margin: 8px 0 12px; white-space: pre-wrap; }
+    .prompt-copy-card button { background: var(--accent); border: 0; border-radius: 4px; color: #fff; cursor: pointer; font: inherit; font-size: 13px; font-weight: 700; padding: 5px 9px; }
+    .prompt-copy-card button:hover { background: #0055cc; }
     .source-footer { border-top: 1px solid var(--line); color: var(--muted); font-size: 12px; margin-top: 48px; padding-top: 16px; }
     @media (max-width: 760px) {
       .topbar { align-items: flex-start; flex-direction: column; }
@@ -83,13 +86,26 @@
   </ol>
 </section>
 <h1 id="teamwork-graph-cli-twg-cli">Teamwork Graph CLI (TWG CLI)</h1>
-<aside class="dac-panel dac-panel-warning">
-<div class="dac-panel-label">Warning</div>
-<p><strong>Early Access Program (EAP):</strong> TWG CLI is not generally available. To request access, contact your team lead or submit a request via the <a href="https://ecosystem.atlassian.net/servicedesk/customer/portal/3664/group/3822/create/19136">EAP signup form</a>.</p>
+<p>TWG CLI is a command line interface to the Atlassian Teamwork Graph and Cloud services. The Teamwork Graph (TWG) is Atlassian's enterprise knowledge &amp; context graph that continuously maps people, content, activities, and relationships across many work tools (Jira, Confluence, Google Drive, Slack, GitHub, Salesforce, etc.) in a compliant, permission aware fashion.</p>
+<p>Install TWG CLI and your agent — Claude Code, Codex, Gemini, Cursor, and others — can query and act across all your Atlassian products and the Teamwork Graph on your behalf. Describe what you want in plain language; the agent handles the rest.</p>
+<h2 id="setup-the-twg-cli-with-an-agent-easiest-way">Setup the twg cli with an agent (Easiest way)</h2>
+<p>The easiest way to install TWG CLI is to ask your coding/coworking agent to do it for you.</p>
+<p>Give your agent this link:</p>
+<p><a href="https://teamwork-graph.atlassian.com/cli/AGENTS.md">https://teamwork-graph.atlassian.com/cli/AGENTS.md</a></p>
+<aside class="dac-panel dac-panel-note prompt-copy-card">
+  <div class="dac-panel-label">Recommended prompt</div>
+  <pre><code>Install and set up TWG CLI for me using the official agent instructions at https://teamwork-graph.atlassian.com/cli/AGENTS.md</code></pre>
+  <button type="button" data-copy-text="Install and set up TWG CLI for me using the official agent instructions at https://teamwork-graph.atlassian.com/cli/AGENTS.md">Copy prompt</button>
 </aside>
-<p>TWG CLI is the skill layer for AI coding agents. Install it once and your agent — Claude, Codex, Gemini, Cursor, and others — can query and act across all your Atlassian products on your behalf. Describe what you want in plain language; the agent handles the rest.</p>
+<p>If you are an AI coding agent, follow the instructions in <code>AGENTS.md</code>. Do not stream the installer through stdin.</p>
+<p>Canonical URLs:</p>
+<ul>
+<li><strong>Agent install instructions</strong> — <a href="https://teamwork-graph.atlassian.com/cli/AGENTS.md">https://teamwork-graph.atlassian.com/cli/AGENTS.md</a></li>
+<li><strong>macOS and Linux installer</strong> — <a href="https://teamwork-graph.atlassian.com/cli/install">https://teamwork-graph.atlassian.com/cli/install</a></li>
+<li><strong>Windows PowerShell installer</strong> — <a href="https://teamwork-graph.atlassian.com/cli/install.ps1">https://teamwork-graph.atlassian.com/cli/install.ps1</a></li>
+<li><strong>Release manifest</strong> — <a href="https://teamwork-graph.atlassian.com/cli/manifest.json">https://teamwork-graph.atlassian.com/cli/manifest.json</a></li>
+</ul>
 <h2 id="how-it-works">How it works</h2>
-<p>For first-time setup from an agent session, give the agent the hosted install instructions: <code>https://teamwork-graph.atlassian.com/cli/AGENTS.md</code>.</p>
 <p>The installer authenticates you, installs agent skills, and wires TWG into detected coding agents. After that, just describe what you want:</p>
 <ul>
 <li><em>&quot;Summarize the work I did this week&quot;</em></li>
@@ -100,6 +116,7 @@
 <p>No commands to memorize. Your agent picks the right actions and runs them.</p>
 <h2 id="products-covered">Products covered</h2>
 <ul>
+<li><strong>Teamwork Graph</strong> — A context graph that connects everything your agents need</li>
 <li><strong>Jira</strong> — Work items, boards, sprints, dashboards, filters, transitions, links</li>
 <li><strong>Confluence</strong> — Pages, blogs, spaces, databases, whiteboards, search</li>
 <li><strong>Bitbucket</strong> — Repos, PRs, branches, commits, pipelines, deployments</li>
@@ -116,7 +133,7 @@
 <li><strong>Jira Align</strong> — Portfolio strategy and enterprise planning</li>
 <li><strong>Talent</strong> — Workforce planning and skills tracking</li>
 </ul>
-<h2 id="get-started">Get started</h2>
+<h2 id="getting-started-manual-way">Getting started (Manual way)</h2>
 <ol>
 <li><a href="/homebrew-twg/getting-started/installation/">Install TWG CLI</a></li>
 <li><a href="/homebrew-twg/getting-started/quick-start/">Verify setup</a></li>
@@ -125,9 +142,21 @@
 </ol>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli 18166defc736 (2026-05-04T02:19:44+00:00).
+        Generated from atlassian/twg-cli 972e929db2ad (2026-05-04T05:55:17+00:00).
       </footer>
     </main>
   </div>
+  <script>
+    for (const button of document.querySelectorAll("[data-copy-text]")) {
+      button.addEventListener("click", async () => {
+        await navigator.clipboard.writeText(button.getAttribute("data-copy-text") || "");
+        const previous = button.textContent;
+        button.textContent = "Copied";
+        setTimeout(() => {
+          button.textContent = previous;
+        }, 2000);
+      });
+    }
+  </script>
 </body>
 </html>

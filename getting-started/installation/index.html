@@ -38,6 +38,9 @@
     .dac-panel-label { font-weight: 700; margin-bottom: 4px; }
     .setup-spotlight { background: #f7f8ff; border-left-color: var(--accent); }
     .setup-spotlight h2 { border: 0; margin-top: 0; padding-top: 0; }
+    .prompt-copy-card pre { margin: 8px 0 12px; white-space: pre-wrap; }
+    .prompt-copy-card button { background: var(--accent); border: 0; border-radius: 4px; color: #fff; cursor: pointer; font: inherit; font-size: 13px; font-weight: 700; padding: 5px 9px; }
+    .prompt-copy-card button:hover { background: #0055cc; }
     .source-footer { border-top: 1px solid var(--line); color: var(--muted); font-size: 12px; margin-top: 48px; padding-top: 16px; }
     @media (max-width: 760px) {
       .topbar { align-items: flex-start; flex-direction: column; }
@@ -74,16 +77,11 @@
     </aside>
     <main>
       <h1 id="installation">Installation</h1>
-<aside class="dac-panel dac-panel-warning">
-<div class="dac-panel-label">Warning</div>
-<p><strong>Early Access Program (EAP):</strong> TWG CLI is not generally available. To request access, contact your team lead or submit a request via the <a href="https://ecosystem.atlassian.net/servicedesk/customer/portal/3664/group/3822/create/19136">EAP signup form</a>.</p>
-</aside>
 <h2 id="before-you-begin">Before you begin</h2>
 <ul>
 <li>You need macOS (arm64 or x64), Linux (x64), or Windows (arm64 or x64).</li>
 <li>You need an Atlassian account with access to the products you want to use.</li>
 <li>You need an AI coding agent installed on your computer to use TWG agent skills. This guide uses Claude Code as an example. For other supported agents, see <a href="/homebrew-twg/">What is TWG CLI?</a>.</li>
-<li>You need Early Access Program (EAP) access to TWG CLI — see the notice at the top of this page.</li>
 </ul>
 <p>The TWG CLI binary does not require a separate runtime (for example, no Node.js).</p>
 <h2 id="install-an-ai-coding-agent">Install an AI coding agent</h2>
@@ -136,10 +134,6 @@ brew install twg
 twg setup
 </code></pre>
 <h2 id="windows">Windows</h2>
-<aside class="dac-panel dac-panel-note">
-<div class="dac-panel-label">Note</div>
-<p><strong>EAP note:</strong> Windows may show a SmartScreen warning — click <strong>More info → Run anyway</strong>. This is expected for EAP. GA binaries will be signed.</p>
-</aside>
 <h3 id="install-powershell">Install — PowerShell</h3>
 <pre><code class="language-powershell">irm https://teamwork-graph.atlassian.com/cli/install.ps1 | iex
 </code></pre>
@@ -171,9 +165,21 @@ twg setup
 </ul>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli 18166defc736 (2026-05-04T02:19:44+00:00).
+        Generated from atlassian/twg-cli 972e929db2ad (2026-05-04T05:55:17+00:00).
       </footer>
     </main>
   </div>
+  <script>
+    for (const button of document.querySelectorAll("[data-copy-text]")) {
+      button.addEventListener("click", async () => {
+        await navigator.clipboard.writeText(button.getAttribute("data-copy-text") || "");
+        const previous = button.textContent;
+        button.textContent = "Copied";
+        setTimeout(() => {
+          button.textContent = previous;
+        }, 2000);
+      });
+    }
+  </script>
 </body>
 </html>
