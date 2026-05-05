@@ -83,15 +83,9 @@
       <h1 id="set-up-twg-cli">Set up TWG CLI</h1>
 <aside class="dac-panel dac-panel-warning">
 <div class="dac-panel-label">Teamwork Graph CLI (TWG CLI) is in beta</div>
-<p>TWG CLI is currently in beta. Commands and documentation may change between releases. After upgrading, run <code>twg skills install</code> to ensure your coding agent uses the latest skill files.</p>
+<p>TWG CLI is currently in beta. Commands and documentation may change between releases.</p>
 </aside>
-<h2 id="agent-installation-mode">Agent installation mode</h2>
-<p>Use this mode when you want your AI coding agent to install TWG CLI, authenticate, and set up agent skills for you.</p>
-<p>Copy the following prompt and paste it into your agent:</p>
-<pre><code class="language-text">Install and set up TWG CLI for me using the official agent instructions at https://teamwork-graph.atlassian.com/cli/AGENTS.md
-</code></pre>
-<p>Your agent follows the hosted instructions, installs the binary, completes authentication, installs TWG skills, and verifies setup.</p>
-<h2 id="cli-installation-mode">CLI installation mode</h2>
+<h2 id="1-cli-installation-mode">1. CLI installation mode</h2>
 <p>Use this mode when you want to install and authenticate TWG CLI directly from your terminal.</p>
 <h3 id="before-you-begin">Before you begin</h3>
 <ul>
@@ -102,22 +96,28 @@
 <p>The TWG CLI binary does not require a separate runtime (for example, no Node.js).</p>
 <h3 id="step-1-install-twg-cli">Step 1: Install TWG CLI</h3>
 <h4 id="macos-and-linux">macOS and Linux</h4>
-<p>Run the install script:</p>
-<pre><code class="language-bash">curl -fsSL https://teamwork-graph.atlassian.com/cli/install | bash
+<p>Recommended:</p>
+<pre><code class="language-bash">curl -fsSL https://teamwork-graph.atlassian.com/cli/install -o twg-install.sh
+bash twg-install.sh
 </code></pre>
-<p>The installer detects your platform, verifies the download checksum, installs the binary in <code>~/.local/bin</code>, asks for first-time consent, installs TWG agent skills, refreshes command help, and starts authentication.</p>
-<p>When consent is required, answer <code>yes</code>, <code>continue</code>, or <code>no</code>. Then:</p>
+<p>If you use Bash or zsh and want a compact shortcut, you can also run:</p>
+<pre><code class="language-bash">bash &lt;(curl -fsSL https://teamwork-graph.atlassian.com/cli/install)
+</code></pre>
+<p>During setup:</p>
 <ul>
+<li>When consent is required, answer <code>yes</code>, <code>continue</code>, or <code>no</code>.</li>
+<li>After consent, enter your Atlassian account email and default site prefix or domain, for example <code>example</code> or <code>example.atlassian.net</code>.</li>
+<li>The installer saves email and site before token setup.</li>
+<li>Setup installs and refreshes TWG agent skills.</li>
 <li>The installer opens the token page. Generate a token in the browser, copy it, then press Enter — the installer reads it from the OS clipboard. If clipboard access is unavailable, it falls back to a masked paste prompt.</li>
 <li>If a Bitbucket token is not already configured, setup offers the same clipboard-confirmed flow for the optional Bitbucket token.</li>
-<li>If the binary is using classic API-token mode, the installer also asks for your Atlassian account email, as classic tokens cannot identify the account on their own.</li>
 <li>If you use a clipboard history manager, clear it after setup.</li>
 </ul>
-<p>The installer completes setup automatically. To repair setup later:</p>
+<p>The installer completes setup and runs <code>twg doctor</code> automatically. To repair setup later:</p>
 <pre><code class="language-bash">twg setup
 </code></pre>
 <p>To install a specific version:</p>
-<pre><code class="language-bash">curl -fsSL https://teamwork-graph.atlassian.com/cli/install | bash -s -- --version 0.9.1
+<pre><code class="language-bash">bash twg-install.sh --version 0.9.1
 </code></pre>
 <p>If <code>~/.local/bin</code> is not in your <code>PATH</code>, the installer prints the exact line to add to your shell profile.</p>
 <h4 id="homebrew-macos">Homebrew (macOS)</h4>
@@ -131,21 +131,19 @@ twg setup
 <p><strong>Windows:</strong> SmartScreen may warn about the installer — choose <strong>More info → Run anyway</strong>. Pre-release builds may not yet use a production code signature; that is expected until generally available signed binaries ship.</p>
 </aside>
 <h5 id="install-powershell">Install — PowerShell</h5>
-<pre><code class="language-powershell">irm https://teamwork-graph.atlassian.com/cli/install.ps1 | iex
+<pre><code class="language-powershell">curl.exe -fsSL https://teamwork-graph.atlassian.com/cli/install.ps1 -o twg-install.ps1
+powershell -ExecutionPolicy Bypass -File .\twg-install.ps1
 </code></pre>
 <h5 id="install-command-prompt-cmd">Install — Command Prompt (cmd)</h5>
 <aside class="dac-panel dac-panel-note">
 <div class="dac-panel-label">Note</div>
 <p><code>curl</code> is built into Windows 10 1803 and later. If you're on an older version, use the PowerShell method above instead.</p>
 </aside>
-<pre><code class="language-cmd">powershell -ExecutionPolicy Bypass -Command &quot;irm https://teamwork-graph.atlassian.com/cli/install.ps1 | iex&quot;
+<pre><code class="language-cmd">curl.exe -fsSL https://teamwork-graph.atlassian.com/cli/install.ps1 -o twg-install.ps1
+powershell -ExecutionPolicy Bypass -File twg-install.ps1
 </code></pre>
-<p>The Windows installer performs the same setup as macOS and Linux: binary install, checksum verification, skill install, help refresh, and token login.</p>
-<h3 id="step-2-authenticate">Step 2: Authenticate</h3>
-<p>Run the following command and follow the prompts:</p>
-<pre><code class="language-bash">twg login
-</code></pre>
-<p>You'll be asked for:</p>
+<p>The Windows installer performs the same setup as macOS and Linux: binary install, checksum verification, consent, email and site save, skill install, token login, and doctor verification.</p>
+<p>Setup asks for:</p>
 <table>
 <thead>
 <tr>
@@ -156,7 +154,11 @@ twg setup
 <tbody>
 <tr>
 <td><strong>Email</strong></td>
-<td>Your Atlassian account email. Required for classic API tokens; scoped-token login may infer it.</td>
+<td>Your Atlassian account email.</td>
+</tr>
+<tr>
+<td><strong>Site</strong></td>
+<td>Your Atlassian site name (for example, <code>example</code> for <code>example.atlassian.net</code>).</td>
 </tr>
 <tr>
 <td><strong>Token</strong></td>
@@ -165,10 +167,6 @@ twg setup
 <tr>
 <td><strong>Bitbucket token</strong></td>
 <td>Optional. Required only for Bitbucket-specific commands.</td>
-</tr>
-<tr>
-<td><strong>Site</strong></td>
-<td>Your Atlassian site name (for example, <code>example</code> for <code>example.atlassian.net</code>). May be auto-selected.</td>
 </tr>
 </tbody>
 </table>
@@ -213,6 +211,12 @@ twg setup
 <div class="dac-panel-label">Note</div>
 <p>Never pass tokens as CLI flags. TWG CLI only accepts credentials interactively or via environment variables.</p>
 </aside>
+<h2 id="2-agent-installation-mode">2. Agent installation mode</h2>
+<p>Use this mode when you want your AI coding agent to install TWG CLI, authenticate, and set up agent skills for you.</p>
+<p>Copy the following prompt and paste it into your agent:</p>
+<pre><code class="language-text">Install and set up TWG CLI for me using the official agent instructions at https://teamwork-graph.atlassian.com/cli/AGENTS.md
+</code></pre>
+<p>Your agent follows the hosted instructions, installs the binary, waits for consent, asks for email and site, completes authentication, installs TWG skills, and verifies setup with <code>twg doctor</code>.</p>
 <h2 id="verify-setup">Verify setup</h2>
 <p>Run:</p>
 <pre><code class="language-bash">twg doctor
@@ -253,7 +257,7 @@ twg setup
 </ul>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli 2533121a1576 (2026-05-05T18:28:33+00:00).
+        Generated from atlassian/twg-cli f3be9e8442b1 (2026-05-05T20:15:05+00:00).
       </footer>
     </main>
   </div>
