@@ -1,28 +1,28 @@
 class Twg < Formula
   desc "CLI wrapper for the Atlassian GraphQL Gateway API"
   homepage "https://bitbucket.org/atlassian/twg-cli"
-  version "0.9.2"
+  version "0.9.3"
   license "MIT"
 
   on_macos do
     on_arm do
-      url "https://teamwork-graph.atlassian.com/cli/homebrew/0.9.2/twg-0.9.2-darwin-arm64.tar.gz"
-      sha256 "66fc6ab19d785d6f88eaeafb872de4ce0f7b7c09af7f081b9975ba4a41c737fa"
+      url "https://teamwork-graph.atlassian.com/cli/homebrew/0.9.3/twg-0.9.3-darwin-arm64.tar.gz"
+      sha256 "31c12661c1f0201bda76524db05211c6f973c250e8c64d1d904056d8ec459617"
     end
     on_intel do
-      url "https://teamwork-graph.atlassian.com/cli/homebrew/0.9.2/twg-0.9.2-darwin-x64.tar.gz"
-      sha256 "e3663efb86454660bfb266d89346ef0905edc5a90a00301f13afa0f862d22e05"
+      url "https://teamwork-graph.atlassian.com/cli/homebrew/0.9.3/twg-0.9.3-darwin-x64.tar.gz"
+      sha256 "b1cc99e4e4e58464c0837723643c16791f3beac05a6c0e6dc4aec3cc2aa976f2"
     end
   end
 
   on_linux do
     on_arm do
-      url "https://teamwork-graph.atlassian.com/cli/homebrew/0.9.2/twg-0.9.2-linux-arm64.tar.gz"
-      sha256 "dfb3e8e05a6e4f212e1e9ec3deaed888f50bba62702742976736c67ef596e08d"
+      url "https://teamwork-graph.atlassian.com/cli/homebrew/0.9.3/twg-0.9.3-linux-arm64.tar.gz"
+      sha256 "eea1a6bd21435954f76daa656d4a86a4f0e4f15d66d6f0822957ad23819ba571"
     end
     on_intel do
-      url "https://teamwork-graph.atlassian.com/cli/homebrew/0.9.2/twg-0.9.2-linux-x64.tar.gz"
-      sha256 "36e4baeccb09e60641bd7127e1c2a46cf9b74481fa56e8fb03a27f7c9223ab54"
+      url "https://teamwork-graph.atlassian.com/cli/homebrew/0.9.3/twg-0.9.3-linux-x64.tar.gz"
+      sha256 "35d0ca08ff33a19a1e98cbf36075b958472089db995dc5b5ab25e2bdd5d2a055"
     end
   end
 
@@ -39,15 +39,10 @@ class Twg < Formula
     chmod 0755, bin/"twg"
   end
 
-  def post_install
-    system bin/"twg", "consent", "--agree", "--source", "homebrew"
-  end
-
   def caveats
     <<~EOS
       Next steps:
-        twg skills install --global --yes
-        twg login
+        twg setup --agent
 
       Updates:
         brew upgrade twg
