@@ -1,16 +1,17 @@
 # TWG CLI Homebrew Tap
-
 [![Atlassian license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE)
 
-A custom tap for [Homebrew](https://brew.sh/).
+TWG CLI [documentation](https://atlassian.github.io/homebrew-twg/)
 
 TWG CLI is a command-line interface for the Atlassian TeamWork Graph API. It allows you to query and manage
 Atlassian work data — including Jira issues, Confluence pages, Bitbucket repos, and more — directly from
 your terminal.
 
-## Installation
+Detailed install steps [here](https://atlassian.github.io/homebrew-twg/getting-started/installation/).
 
-Via Homebrew
+## Brew Instructions
+
+via Homebrew
 
 ```shell
 $ brew tap atlassian/twg
@@ -43,3 +44,4 @@ MIT licensed, see [LICENSE](LICENSE) file.
 <br/>
 
 [![With ❤️ from Atlassian](https://raw.githubusercontent.com/atlassian-internal/oss-assets/master/banner-cheers.png)](https://www.atlassian.com)
+A custom tap for [Homebrew](https://brew.sh/).
