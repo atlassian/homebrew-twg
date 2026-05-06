@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Agent examples | TWG CLI</title>
-  <meta name="description" content="Example natural language prompts and the TWG CLI commands agents run in response.">
+  <meta name="description" content="Example natural language prompts for querying Atlassian data across multiple apps with TWG CLI.">
   <style>
     :root { color-scheme: light; --ink: #172b4d; --muted: #44546f; --line: #dcdfe4; --panel: #f7f8f9; --accent: #0c66e4; --warning: #fff7d6; --note: #e9f2ff; --tip: #dcfff1; }
     * { box-sizing: border-box; }
@@ -65,18 +65,19 @@
       <nav class="site-nav" aria-label="TWG CLI docs">
 <ul>
 <li class="nav-heading" style="--depth:0">Guides</li>
-<li class="nav-heading" style="--depth:1">Getting Started</li>
+<li class="nav-heading" style="--depth:1">Getting started</li>
 <li class="nav-link" style="--depth:2"><a href="/homebrew-twg/">Overview</a></li>
 <li class="nav-link" style="--depth:2"><a href="/homebrew-twg/getting-started/installation/">Set up TWG CLI</a></li>
+<li class="nav-link" style="--depth:2"><a href="/homebrew-twg/getting-started/authentication/">Authentication</a></li>
 <li class="nav-link" style="--depth:2"><a href="/homebrew-twg/faq/">FAQ</a></li>
-<li class="nav-heading" style="--depth:1">Agent Integration</li>
-<li class="nav-link" style="--depth:2"><a href="/homebrew-twg/agents/skills/">Agent Skills</a></li>
-<li class="nav-link" style="--depth:2"><a href="/homebrew-twg/agents/examples/" aria-current="page">Agent Examples</a></li>
+<li class="nav-heading" style="--depth:1">Agent integration</li>
+<li class="nav-link" style="--depth:2"><a href="/homebrew-twg/agents/skills/">Agent skills</a></li>
+<li class="nav-link" style="--depth:2"><a href="/homebrew-twg/agents/examples/" aria-current="page">Agent examples</a></li>
 <li class="nav-heading" style="--depth:0">Reference</li>
-<li class="nav-heading" style="--depth:1">Command Reference</li>
-<li class="nav-link" style="--depth:2"><a href="/homebrew-twg/commands/cli-reference/">CLI Reference</a></li>
-<li class="nav-link" style="--depth:2"><a href="/homebrew-twg/commands/global-options/">Global Options</a></li>
-<li class="nav-link" style="--depth:2"><a href="/homebrew-twg/commands/output-format/">Output Format</a></li>
+<li class="nav-heading" style="--depth:1">Command reference</li>
+<li class="nav-link" style="--depth:2"><a href="/homebrew-twg/commands/cli-reference/">CLI reference</a></li>
+<li class="nav-link" style="--depth:2"><a href="/homebrew-twg/commands/global-options/">Global options</a></li>
+<li class="nav-link" style="--depth:2"><a href="/homebrew-twg/commands/output-format/">Output format</a></li>
 </ul>
 </nav>
     </aside>
@@ -86,87 +87,140 @@
 <div class="dac-panel-label">Teamwork Graph CLI (TWG CLI) is in beta</div>
 <p>TWG CLI is currently in beta. Commands and documentation may change between releases.</p>
 </aside>
-<p>After <a href="/homebrew-twg/agents/skills/">installing skills</a>, describe what you want in plain language. Your agent discovers the right commands and synthesises the results. Here are common prompts to try:</p>
-<h2 id="simple-prompts">Simple prompts</h2>
+<h2 id="ask-your-agent-across-multiple-apps">Ask your agent across multiple apps</h2>
+<p>TWG CLI lets your agent pull context from multiple Atlassian apps in a single prompt, so you can get a complete picture without querying each app separately.</p>
 <table>
 <thead>
 <tr>
-<th>Prompt</th>
-<th>What the agent runs</th>
+<th>Use case</th>
+<th>Example prompt</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><em>&quot;Summarize the work I did in the last 2 weeks&quot;</em></td>
-<td><code>twg work query --scope me --since 14d</code></td>
+<td><strong>Summarise your recent work</strong> — Get a combined view of your Jira, Confluence, and Bitbucket activity, so you can quickly recap your week.</td>
+<td><em>&quot;Summarise everything I worked on this week.&quot;</em></td>
 </tr>
 <tr>
-<td><em>&quot;What are my open Jira issues?&quot;</em></td>
-<td><code>twg jira workitem query --jql &quot;assignee = currentUser() AND statusCategory != Done&quot;</code></td>
+<td><strong>Get context for your current focus</strong> — See your open issues, upcoming deadlines, and recent activity, so you can prioritise your day.</td>
+<td><em>&quot;What should I focus on today?&quot;</em></td>
 </tr>
 <tr>
-<td><em>&quot;Show latest updates on project ATLAS&quot;</em></td>
-<td><code>twg projects get ATLAS</code></td>
+<td><strong>Look up a person</strong> — Find out who someone is and what they're working on across products.</td>
+<td><em>&quot;Who is [name] and what are they working on?&quot;</em></td>
 </tr>
 <tr>
-<td><em>&quot;Who do I collaborate with most?&quot;</em></td>
-<td><code>twg collaborators --scope me</code></td>
-</tr>
-<tr>
-<td><em>&quot;Find Confluence pages about onboarding&quot;</em></td>
-<td><code>twg confluence search query --cql &quot;text ~ 'onboarding'&quot;</code></td>
-</tr>
-<tr>
-<td><em>&quot;Create a Jira issue for the login bug&quot;</em></td>
-<td><code>twg jira workitem create --space PROJ --type Bug --summary &quot;Login bug&quot;</code></td>
-</tr>
-<tr>
-<td><em>&quot;What's my org structure?&quot;</em></td>
-<td><code>twg org-tree --scope me --up-only</code></td>
-</tr>
-<tr>
-<td><em>&quot;Show PRs I authored this week&quot;</em></td>
-<td><code>twg bitbucket pull-requests query --scope me --since 7d</code></td>
-</tr>
-<tr>
-<td><em>&quot;What goals is my team tracking?&quot;</em></td>
-<td><code>twg goals --scope team</code></td>
-</tr>
-<tr>
-<td><em>&quot;Get full context around PROJ-456&quot;</em></td>
-<td><code>twg context jira workitem PROJ-456</code></td>
+<td><strong>Onboard to a new team</strong> — Get a summary of a team's people, projects, docs, and current sprint.</td>
+<td><em>&quot;I just joined the Platform Engineering team. Help me get up to speed.&quot;</em></td>
 </tr>
 </tbody>
 </table>
-<h2 id="workflow-prompts">Workflow prompts</h2>
-<p>These prompts combine multiple commands into a single response.</p>
-<p><strong>Generate a weekly status report:</strong></p>
+<h2 id="multi-step-workflow-examples">Multi-step workflow examples</h2>
+<p>These examples show how your agent chains multiple queries from a single prompt.</p>
+<h3 id="example-1-weekly-work-summary">Example 1: Weekly work summary</h3>
+<p><strong>What you say:</strong></p>
 <blockquote>
-<p><em>&quot;Generate a weekly status report for my goals and projects. Include Jira progress, merged PRs, and Confluence updates from this week.&quot;</em></p>
+<p><em>&quot;Summarise everything I worked on this week.&quot;</em></p>
 </blockquote>
-<p><strong>Onboard to a new team:</strong></p>
+<p><strong>What your agent does:</strong></p>
+<ol>
+<li>Looks up your recent Jira activity — issues updated, commented on, or transitioned.</li>
+<li>Finds Confluence pages you've created or edited.</li>
+<li>Checks pull requests you've opened or reviewed in Bitbucket.</li>
+<li>Produces a plain-English summary you can share in a standup or check-in.</li>
+</ol>
+<h3 id="example-2-onboard-to-a-new-project">Example 2: Onboard to a new project</h3>
+<p><strong>What you say:</strong></p>
 <blockquote>
-<p><em>&quot;I just joined Platform Engineering. Orientate me — team members, org chart, goals, projects, focus areas, recent Confluence docs, and the current sprint.&quot;</em></p>
+<p><em>&quot;I just joined the Platform Engineering team. Help me get up to speed.&quot;</em></p>
 </blockquote>
-<p><strong>Explore a Jira issue in depth:</strong></p>
+<p><strong>What your agent does:</strong></p>
+<ol>
+<li>Finds the team structure and key people.</li>
+<li>Looks up the current active sprint and open issues.</li>
+<li>Finds relevant Confluence docs and onboarding pages.</li>
+<li>Lists recent pull requests in the team's repos.</li>
+<li>Summarises what the team is currently focused on.</li>
+</ol>
+<h3 id="example-3-explore-a-jira-issue-in-depth">Example 3: Explore a Jira issue in depth</h3>
+<p><strong>What you say:</strong></p>
 <blockquote>
-<p><em>&quot;Explore the full context of PROJ-1234. Show linked PRs, Confluence docs, parent and child issues, and dependencies.&quot;</em></p>
+<p><em>&quot;Tell me everything about PROJ-123.&quot;</em></p>
 </blockquote>
-<p><strong>Look someone up:</strong></p>
+<p><strong>What your agent does:</strong></p>
+<ol>
+<li>Fetches the issue details, current status, and assignee.</li>
+<li>Looks up linked issues and dependencies.</li>
+<li>Finds related pull requests and any linked Confluence pages.</li>
+<li>Gives you a full picture of the issue and what needs to happen next.</li>
+</ol>
+<h3 id="example-4-prepare-for-a-sprint-review">Example 4: Prepare for a sprint review</h3>
+<p><strong>What you say:</strong></p>
 <blockquote>
-<p><em>&quot;Who is jane.doe@example.com? Show their role, reporting chain, teams, and recent work.&quot;</em></p>
+<p><em>&quot;Help me prepare for our sprint review. The sprint ends Friday.&quot;</em></p>
 </blockquote>
-<p><strong>Check strategic health:</strong></p>
-<blockquote>
-<p><em>&quot;Generate a health report for the 'Platform' focus area. Show active goals with status and flag anything off track.&quot;</em></p>
-</blockquote>
+<p><strong>What your agent does:</strong></p>
+<ol>
+<li>Lists all issues in the current sprint, grouped by status.</li>
+<li>Flags anything overdue or not started.</li>
+<li>Summarises completed work in a format you can share.</li>
+<li>Identifies any blockers or at-risk items.</li>
+</ol>
+<h2 id="example-prompts-quick-reference">Example prompts quick reference</h2>
+<p>Use these prompts as starting points. Your agent understands natural language, so you don't need the exact wording.</p>
+<table>
+<thead>
+<tr>
+<th>Topic</th>
+<th>Example prompt</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>My work</td>
+<td><em>&quot;What are my open Jira issues?&quot;</em></td>
+</tr>
+<tr>
+<td>My work</td>
+<td><em>&quot;Summarise everything I worked on this week.&quot;</em></td>
+</tr>
+<tr>
+<td>Sprint</td>
+<td><em>&quot;Show me the current sprint for the Platform team.&quot;</em></td>
+</tr>
+<tr>
+<td>Issues</td>
+<td><em>&quot;Tell me everything about PROJ-123.&quot;</em></td>
+</tr>
+<tr>
+<td>Confluence</td>
+<td><em>&quot;Find pages about onboarding in Confluence.&quot;</em></td>
+</tr>
+<tr>
+<td>Code</td>
+<td><em>&quot;Show PRs I authored this month.&quot;</em></td>
+</tr>
+<tr>
+<td>People</td>
+<td><em>&quot;Who are the key people in the Platform Engineering team?&quot;</em></td>
+</tr>
+<tr>
+<td>Goals</td>
+<td><em>&quot;What goals is my team tracking?&quot;</em></td>
+</tr>
+<tr>
+<td>Context</td>
+<td><em>&quot;I just joined the Platform Engineering team. Help me get up to speed.&quot;</em></td>
+</tr>
+</tbody>
+</table>
 <h2 id="next-steps">Next steps</h2>
 <ul>
 <li><a href="/homebrew-twg/agents/skills/">Install skills</a></li>
 </ul>
 
       <footer class="source-footer">
-        Generated from atlassian/twg-cli e1892686a8ad (2026-05-06T02:32:14+00:00).
+        Generated from atlassian/twg-cli b71e2f3d9aeb (2026-05-06T03:29:14+00:00).
       </footer>
     </main>
   </div>
